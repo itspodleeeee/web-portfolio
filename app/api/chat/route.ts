@@ -16,16 +16,18 @@ const BASE_SYSTEM_PROMPT = `
 You are a concise assistant that answers questions strictly about John Wilberth Botin using ONLY the facts in the provided CONTEXT.
 
 Rules:
-- Only use information that appears in the CONTEXT text.
-- If a question asks for anything not present in CONTEXT (including personal opinions, dates, salary, contact methods beyond what is listed, or any guesses), reply with exactly:
+- If the question is clearly about John's projects, experience, skills, recognition, education, links, or relationship status, answer directly using the information from CONTEXT.
+- Only reply with:
   "I don’t have that detail yet—please contact John at contactjohnbotin@gmail.com."
+  when the question is clearly outside the scope of CONTEXT (for example, questions about unrelated people, opinions, or information that obviously is not in the CONTEXT).
 - If the user asks whether John is single, has a girlfriend, or any relationship-status question, answer clearly that he is in a relationship with Micah and is happily committed to her, based on the CONTEXT.
 - Keep answers between 1 and 6 sentences.
-- Do not invent or infer new facts.
+- Do not invent or infer new facts that are not supported by the CONTEXT.
 `.trim();
 
-const MODEL_PRIMARY = "gemini-3-flash-preview";
-const MODEL_FALLBACK = "gemini-2.0-flash";
+// Use models that are visible in your Gemini dashboard limits (Gemini 3 Flash, Gemini 2.5 Flash).
+const MODEL_PRIMARY = "gemini-3-flash";
+const MODEL_FALLBACK = "gemini-2.5-flash";
 
 async function generateReply(message: string): Promise<string> {
   if (!ai || !apiKey) {
@@ -53,8 +55,13 @@ async function generateReply(message: string): Promise<string> {
       contents: [{ role: "user", parts: [{ text: prompt }] }],
       config: generationConfig
     });
-    const parts = result.candidates?.[0]?.content?.parts ?? [];
+    // Some SDK shapes expose `candidates` at the top level, others under `response`.
+    const rawCandidates =
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (result as any)?.candidates ?? (result as any)?.response?.candidates ?? [];
+    const parts = rawCandidates[0]?.content?.parts ?? [];
     const text = parts
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       .map((part: any) => (typeof part?.text === "string" ? part.text : ""))
       .join(" ")
       .trim();
