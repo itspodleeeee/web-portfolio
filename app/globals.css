@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  @apply bg-background-light text-foreground-light dark:bg-background-dark dark:text-foreground-dark antialiased;
+}
+
+::selection {
+  background-color: rgba(99, 102, 241, 0.18);
+}
+
