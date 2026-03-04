@@ -25,8 +25,7 @@ export const Hero = () => {
             </span>
           </h1>
           <p className="text-sm font-medium text-slate-700 sm:text-base dark:text-slate-200">
-            Entry-Level IT Support | BSIT (Network &amp; Cybersecurity) Student | Content
-            Creator
+            Creator | Security | AI | Dev | BSIT (Network &amp; Cybersecurity) Student | Marketing | Tech Enthusiast
           </p>
           <p className="text-xs text-slate-500 dark:text-slate-400">
             Based in the Philippines · Available for entry-level IT support, technical
