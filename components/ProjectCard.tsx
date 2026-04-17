@@ -6,6 +6,10 @@ import { AnimatePresence, motion } from "framer-motion";
 type ProjectCardProps = {
   title: string;
   subtitle: string;
+  badge?: string;
+  summary?: string;
+  caseStudy?: string;
+  tags?: string[];
   bullets: string[];
   linkLabel?: string;
   linkHref?: string;
@@ -14,6 +18,10 @@ type ProjectCardProps = {
 export const ProjectCard = ({
   title,
   subtitle,
+  badge,
+  summary,
+  caseStudy,
+  tags,
   bullets,
   linkHref,
   linkLabel
@@ -31,12 +39,24 @@ export const ProjectCard = ({
         className="flex w-full items-start justify-between gap-3 text-left"
       >
         <div>
-          <h3 className="text-sm font-semibold text-slate-900 dark:text-slate-100">
-            {title}
-          </h3>
+          <div className="flex flex-wrap items-center gap-2">
+            <h3 className="text-sm font-semibold text-slate-900 dark:text-slate-100">
+              {title}
+            </h3>
+            {badge && (
+              <span className="inline-flex rounded-full bg-accent/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-accent">
+                {badge}
+              </span>
+            )}
+          </div>
           <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
             {subtitle}
           </p>
+          {summary && (
+            <p className="mt-2 max-w-xl text-xs leading-relaxed text-slate-600 dark:text-slate-300">
+              {summary}
+            </p>
+          )}
         </div>
         <span
           className={`mt-1 inline-flex h-5 w-5 items-center justify-center rounded-full border border-slate-200 text-[10px] text-slate-500 transition group-hover:border-slate-300 group-hover:text-slate-700 dark:border-slate-700 dark:text-slate-400 dark:group-hover:border-slate-500 dark:group-hover:text-slate-100 ${
@@ -58,6 +78,12 @@ export const ProjectCard = ({
             transition={{ duration: 0.18, ease: "easeOut" }}
             className="overflow-hidden"
           >
+            {caseStudy && (
+              <p className="mt-3 text-xs leading-relaxed text-slate-600 dark:text-slate-300">
+                {caseStudy}
+              </p>
+            )}
+
             <ul className="mt-3 space-y-1.5 text-xs leading-relaxed text-slate-600 dark:text-slate-300">
               {bullets.map((bullet, idx) => (
                 <li key={idx} className="flex gap-2">
@@ -66,6 +92,19 @@ export const ProjectCard = ({
                 </li>
               ))}
             </ul>
+
+            {tags?.length ? (
+              <div className="mt-3 flex flex-wrap gap-1.5">
+                {tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="rounded-full border border-slate-200 bg-slate-50 px-2 py-1 text-[10px] font-medium text-slate-600 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            ) : null}
 
             {linkHref && linkLabel && (
               <div className="mt-3">

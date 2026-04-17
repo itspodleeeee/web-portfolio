@@ -1,79 +1,30 @@
 'use client';
 
-import { FormEvent, useCallback, useState } from "react";
+import { FormEvent, useState } from "react";
+import { useChat } from "./ChatProvider";
 
-type Message = {
-  role: "user" | "bot";
-  content: string;
+type Suggestion = {
+  prompt: string;
+  badge?: string;
 };
 
-const SUGGESTIONS = [
-  "What projects did you build?",
-  "Tell me about the ELO nomination.",
-  "What’s your IT support experience?",
-  "What was the GMA feature about?"
+const SUGGESTIONS: Suggestion[] = [
+  { prompt: "Tell me about Villa Ikarus.", badge: "New" },
+  { prompt: "What projects did you build?" },
+  { prompt: "Tell me about the ELO nomination." },
+  { prompt: "What’s your IT support experience?" },
+  { prompt: "What was the GMA feature about?" }
 ];
 
 export const ChatWidget = () => {
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      role: "bot",
-      content:
-        "Hi! I can answer concise questions about John based on his public portfolio—ask anything about his projects, experience, or skills."
-    }
-  ]);
   const [input, setInput] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  const sendMessage = useCallback(
-    async (text: string) => {
-      const trimmed = text.trim();
-      if (!trimmed || loading) return;
-
-      setError(null);
-      setInput("");
-      setMessages((prev) => [...prev, { role: "user", content: trimmed }]);
-      setLoading(true);
-
-      try {
-        const res = await fetch("/api/chat", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ message: trimmed })
-        });
-
-        if (!res.ok) {
-          throw new Error(`Request failed with status ${res.status}`);
-        }
-
-        const data = (await res.json()) as { reply?: string };
-        const reply =
-          (data.reply?.trim() || "") ||
-          "I don’t have that detail yet—please contact John at contactjohnbotin@gmail.com.";
-
-        setMessages((prev) => [...prev, { role: "bot", content: reply }]);
-      } catch (err) {
-        console.error("[ChatWidget] error:", err);
-        setError("Something went wrong—try again.");
-        setMessages((prev) => [
-          ...prev,
-          {
-            role: "bot",
-            content:
-              "Something went wrong—try again or reach out at contactjohnbotin@gmail.com."
-          }
-        ]);
-      } finally {
-        setLoading(false);
-      }
-    },
-    [loading]
-  );
+  const { messages, loading, error, sendMessage, clearError } = useChat();
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
+    clearError();
     void sendMessage(input);
+    setInput("");
   };
 
   return (
@@ -90,14 +41,24 @@ export const ChatWidget = () => {
       </div>
 
       <div className="flex flex-wrap gap-2">
-        {SUGGESTIONS.map((s) => (
+        {SUGGESTIONS.map((suggestion) => (
           <button
-            key={s}
+            key={suggestion.prompt}
             type="button"
-            onClick={() => sendMessage(s)}
+            onClick={() => {
+              clearError();
+              void sendMessage(suggestion.prompt);
+            }}
             className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-[11px] font-medium text-slate-700 transition hover:border-slate-300 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:border-slate-500 dark:hover:bg-slate-800"
           >
-            {s}
+            <span className="inline-flex items-center gap-1.5">
+              <span>{suggestion.prompt}</span>
+              {suggestion.badge && (
+                <span className="rounded-full bg-accent/10 px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-[0.12em] text-accent">
+                  {suggestion.badge}
+                </span>
+              )}
+            </span>
           </button>
         ))}
       </div>

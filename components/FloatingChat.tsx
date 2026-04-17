@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { ChatWidget } from "./ChatWidget";
 
 const TEASERS = [
+  "New: ask about the Villa Ikarus resort website project.",
   "Ask about John’s projects and skills here.",
   "Curious about the ELO nomination or GMA feature?",
   "You can quickly ask about his IT support experience too."

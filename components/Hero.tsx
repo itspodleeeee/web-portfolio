@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useTheme } from "./ThemeProvider";
 import { VerifiedBadge } from "./VerifiedBadge";
+import { HERO_CONTENT } from "../data/portfolio";
 
 export const Hero = () => {
   const { theme } = useTheme();
@@ -16,20 +17,19 @@ export const Hero = () => {
       <div className="mx-auto flex max-w-5xl flex-col gap-10 px-4 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:px-8">
         <div className="max-w-xl space-y-5">
           <p className="text-xs font-medium uppercase tracking-[0.25em] text-slate-500 dark:text-slate-400">
-            IT Support · Cybersecurity · Content
+            {HERO_CONTENT.eyebrow}
           </p>
           <h1 className="text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl lg:text-5xl dark:text-slate-50">
             <span className="inline-flex items-center gap-2">
-              Botin, John Wilberth B.
+              {HERO_CONTENT.name}
               <VerifiedBadge className="inline-flex h-6 w-6 translate-y-[1px]" />
             </span>
           </h1>
           <p className="text-sm font-medium text-slate-700 sm:text-base dark:text-slate-200">
-            Creator | Security | AI | Dev | BSIT (Network &amp; Cybersecurity) Student | Marketing | Tech Enthusiast
+            {HERO_CONTENT.tagline}
           </p>
           <p className="text-xs text-slate-500 dark:text-slate-400">
-            Based in the Philippines · Available for entry-level IT support, technical
-            operations, and digital content roles.
+            {HERO_CONTENT.availability}
           </p>
 
           <div className="flex flex-wrap items-center gap-3 pt-2">

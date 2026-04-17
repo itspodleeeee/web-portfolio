@@ -4,15 +4,7 @@ import { useCallback } from "react";
 import { ThemeToggle } from "./ThemeToggle";
 import { useActiveSection } from "./Section";
 import { VerifiedBadge } from "./VerifiedBadge";
-
-const sections = [
-  { id: "about", label: "About" },
-  { id: "experience", label: "Experience" },
-  { id: "skills", label: "Skills" },
-  { id: "projects", label: "Projects" },
-  { id: "recognition", label: "Recognition" },
-  { id: "contact", label: "Contact" }
-];
+import { NAV_SECTIONS } from "../data/portfolio";
 
 const scrollToSection = (id: string) => {
   if (typeof document === "undefined") return;
@@ -47,7 +39,7 @@ export const Navbar = () => {
         </div>
 
         <div className="hidden items-center gap-6 text-xs font-medium text-slate-500 sm:flex">
-          {sections.map((section) => {
+          {NAV_SECTIONS.map((section) => {
             const isActive = activeId === section.id;
             return (
               <button
