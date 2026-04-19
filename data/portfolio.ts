@@ -32,6 +32,15 @@ export type TimelineEntry = {
 
 export const EXPERIENCE_ITEMS: readonly TimelineEntry[] = [
   {
+    title: "Freelance Web & Systems Developer — Self-Employed | Remote",
+    period: "2025 – Present",
+    bullets: [
+      "Build and maintain client websites and small web-based systems from requirements through launch—layout, responsive UI, forms and contact flows, performance-minded frontends, and handoffs clients can actually operate.",
+      "Handle the practical engineering around shipping: hosting and deployments, basic technical SEO, analytics-friendly structure, accessibility-minded patterns, and troubleshooting when something breaks in production.",
+      "Some engagements are covered by NDAs or confidentiality terms; those projects are omitted here out of respect for client agreements."
+    ]
+  },
+  {
     title: "Content Creator — Meta (Self-Employed) | Remote",
     period: "2022 – Present",
     bullets: [
@@ -92,7 +101,20 @@ export const SKILL_GROUPS: readonly SkillGroup[] = [
   { label: "Web Technologies", items: ["HTML", "CSS"] },
   {
     label: "Frameworks & Library",
-    items: ["ReactJS", "Tailwind CSS"]
+    items: ["Next.js (App Router)", "React", "TypeScript", "Tailwind CSS"]
+  },
+  {
+    label: "SEO, integrations & delivery",
+    items: [
+      "Technical SEO & canonical URLs",
+      "JSON-LD (FAQPage, LodgingBusiness)",
+      "Open Graph & Twitter cards",
+      "Sitemap.xml & robots.txt",
+      "AI inquiry chatbot & resilient APIs",
+      "Multi-currency UX (PHP / USD)",
+      "WhatsApp & email inquiry flows",
+      "Production fixes (redirects, indexing, sitemaps)"
+    ]
   },
   {
     label: "Cybersecurity Knowledge",
@@ -105,7 +127,13 @@ export const SKILL_GROUPS: readonly SkillGroup[] = [
   },
   {
     label: "Tools & Platforms",
-    items: ["GitHub", "Meta Business Suite", "Canva", "Documentation & common IT tools"]
+    items: [
+      "GitHub",
+      "Vercel",
+      "Meta Business Suite",
+      "Canva",
+      "Documentation & common IT tools"
+    ]
   }
 ];
 

@@ -116,6 +116,11 @@ export default function Page() {
           </Section>
 
           <Section id="projects" title="Projects">
+            <p className="mb-6 max-w-3xl text-xs leading-relaxed text-slate-600 dark:text-slate-400">
+              Work bound by NDAs or other confidentiality agreements is not shown here so I
+              stay aligned with those commitments. This section only includes projects I am
+              allowed to present publicly.
+            </p>
             <div className="grid gap-5 md:grid-cols-2">
               {PROJECTS.map((project) => (
                 <ProjectCard

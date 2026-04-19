@@ -9,6 +9,8 @@ import {
   useMemo,
   useState
 } from "react";
+import { createPortal } from "react-dom";
+import { ExpandedChatOverlay } from "./ExpandedChatOverlay";
 
 export type ChatMessage = {
   role: "user" | "bot";
@@ -21,6 +23,12 @@ type ChatContextValue = {
   error: string | null;
   sendMessage: (text: string) => Promise<void>;
   clearError: () => void;
+  draft: string;
+  setDraft: (value: string) => void;
+  submitDraft: () => Promise<void>;
+  expanded: boolean;
+  openExpanded: () => void;
+  closeExpanded: () => void;
 };
 
 const STORAGE_KEY = "portfolio-chat-history";
@@ -39,6 +47,13 @@ export const ChatProvider = ({ children }: { children: ReactNode }) => {
   const [messages, setMessages] = useState<ChatMessage[]>(INITIAL_MESSAGES);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [draft, setDraft] = useState("");
+  const [expanded, setExpanded] = useState(false);
+  const [portalReady, setPortalReady] = useState(false);
+
+  useEffect(() => {
+    setPortalReady(true);
+  }, []);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -65,6 +80,17 @@ export const ChatProvider = ({ children }: { children: ReactNode }) => {
       console.error("[ChatProvider] failed to persist chat history:", err);
     }
   }, [messages]);
+
+  useEffect(() => {
+    if (typeof document === "undefined") return;
+    if (!expanded) return;
+
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previous;
+    };
+  }, [expanded]);
 
   const clearError = useCallback(() => {
     setError(null);
@@ -114,18 +140,63 @@ export const ChatProvider = ({ children }: { children: ReactNode }) => {
     [loading]
   );
 
+  const submitDraft = useCallback(async () => {
+    const trimmed = draft.trim();
+    if (!trimmed || loading) return;
+
+    clearError();
+    setDraft("");
+    await sendMessage(trimmed);
+  }, [draft, loading, clearError, sendMessage]);
+
+  const openExpanded = useCallback(() => {
+    setExpanded(true);
+  }, []);
+
+  const closeExpanded = useCallback(() => {
+    setExpanded(false);
+  }, []);
+
   const value = useMemo(
     () => ({
       messages,
       loading,
       error,
       sendMessage,
-      clearError
+      clearError,
+      draft,
+      setDraft,
+      submitDraft,
+      expanded,
+      openExpanded,
+      closeExpanded
     }),
-    [messages, loading, error, sendMessage, clearError]
+    [
+      messages,
+      loading,
+      error,
+      sendMessage,
+      clearError,
+      draft,
+      submitDraft,
+      expanded,
+      openExpanded,
+      closeExpanded
+    ]
   );
 
-  return <ChatContext.Provider value={value}>{children}</ChatContext.Provider>;
+  return (
+    <ChatContext.Provider value={value}>
+      {children}
+      {portalReady &&
+        expanded &&
+        typeof document !== "undefined" &&
+        createPortal(
+          <ExpandedChatOverlay onClose={closeExpanded} />,
+          document.body
+        )}
+    </ChatContext.Provider>
+  );
 };
 
 export const useChat = () => {
