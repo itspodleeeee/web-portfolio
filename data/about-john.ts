@@ -87,7 +87,7 @@ ${CERTIFICATES.map(
 
 RESUME:
 Botin, John Wilberth B.
-${CONTACT_DETAILS.phone} | ${CONTACT_DETAILS.email} | Philippines
+${CONTACT_DETAILS.email} | Philippines
 
 Programming Languages: C, C++, Python, Java, JavaScript
 Frameworks and Library: ReactJS, Tailwind CSS

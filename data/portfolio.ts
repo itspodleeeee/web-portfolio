@@ -302,8 +302,6 @@ export const RECOGNITION_ITEMS: readonly RecognitionEntry[] = [
 ];
 
 export const CONTACT_DETAILS = {
-  phone: "+63 951 146 9521",
-  phoneHref: "tel:+639511469521",
   email: "contactjohnbotin@gmail.com",
   emailHref: "mailto:contactjohnbotin@gmail.com",
   linkedin: "https://www.linkedin.com/in/johnwilberthbotin",

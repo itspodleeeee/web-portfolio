@@ -21,6 +21,7 @@ import {
   RECOGNITION_ITEMS,
   SKILL_GROUPS
 } from "../data/portfolio";
+import { SITE_URL } from "../data/site";
 
 export default function Page() {
   const contactFormRef = useRef<HTMLFormElement | null>(null);
@@ -28,6 +29,38 @@ export default function Page() {
   const [contactStatus, setContactStatus] = useState<
     "idle" | "success" | "error"
   >("idle");
+
+  const personJsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Person",
+        "@id": `${SITE_URL}/#person`,
+        name: "John Wilberth B. Botin",
+        alternateName: ["John Wilberth Botin", "John Botin"],
+        url: SITE_URL,
+        image: `${SITE_URL}/profile/1.jpg`,
+        jobTitle: "Freelance Web & Systems Developer",
+        email: CONTACT_DETAILS.email,
+        sameAs: [
+          CONTACT_DETAILS.linkedin,
+          CONTACT_DETAILS.github,
+          CONTACT_DETAILS.facebook,
+          CONTACT_DETAILS.instagram,
+          "https://www.credly.com/badges/e740844a-a342-47e0-8a47-74db220cd37e/public_url"
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": `${SITE_URL}/#website`,
+        url: SITE_URL,
+        name: "John Wilberth B. Botin Portfolio",
+        publisher: {
+          "@id": `${SITE_URL}/#person`
+        }
+      }
+    ]
+  };
 
   const handleContactSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -74,6 +107,11 @@ export default function Page() {
         <div className="min-h-screen bg-background-light text-slate-900 dark:bg-background-dark dark:text-slate-50">
           <Navbar />
           <main>
+            <script
+              type="application/ld+json"
+              // eslint-disable-next-line react/no-danger
+              dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+            />
             <Hero />
 
           <Section id="about" title="About">
@@ -256,17 +294,6 @@ export default function Page() {
                   internships, or digital content roles, feel free to reach out directly.
                 </p>
                 <div className="space-y-2 text-sm">
-                  <div>
-                    <p className="text-xs font-medium uppercase tracking-[0.18em] text-slate-400 dark:text-slate-500">
-                      Phone
-                    </p>
-                    <a
-                      href={CONTACT_DETAILS.phoneHref}
-                      className="text-sm text-slate-800 underline-offset-4 hover:underline dark:text-slate-100"
-                    >
-                      {CONTACT_DETAILS.phone}
-                    </a>
-                  </div>
                   <div>
                     <p className="text-xs font-medium uppercase tracking-[0.18em] text-slate-400 dark:text-slate-500">
                       Email
