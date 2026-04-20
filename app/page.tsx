@@ -1,6 +1,7 @@
 'use client';
 
 import { FormEvent, useRef, useState } from "react";
+import Image from "next/image";
 import emailjs from "@emailjs/browser";
 import { Hero } from "../components/Hero";
 import { Navbar } from "../components/Navbar";
@@ -12,6 +13,7 @@ import { ChatWidget } from "../components/ChatWidget";
 import { FloatingChat } from "../components/FloatingChat";
 import {
   ABOUT_PARAGRAPHS,
+  CERTIFICATES,
   CONTACT_DETAILS,
   EDUCATION_ITEMS,
   EXPERIENCE_ITEMS,
@@ -135,6 +137,61 @@ export default function Page() {
                   linkLabel={project.linkLabel}
                   bullets={[...project.bullets]}
                 />
+              ))}
+            </div>
+          </Section>
+
+          <Section id="certificates" title="Certificates">
+            <div className="grid gap-5 md:grid-cols-2">
+              {CERTIFICATES.map((certificate) => (
+                <article
+                  key={certificate.title}
+                  className="rounded-2xl border border-slate-100 bg-white/80 p-4 text-sm shadow-sm dark:border-slate-800 dark:bg-slate-900/70"
+                >
+                  {certificate.verifyUrl ? (
+                    <a
+                      href={certificate.verifyUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="block overflow-hidden rounded-xl border border-slate-100 bg-slate-50 p-3 transition hover:border-slate-300 hover:shadow-sm dark:border-slate-800 dark:bg-slate-950/40 dark:hover:border-slate-600"
+                      aria-label={`Verify ${certificate.title} certificate`}
+                    >
+                      <Image
+                        src={certificate.imageSrc}
+                        alt={certificate.imageAlt}
+                        width={600}
+                        height={600}
+                        className="mx-auto h-auto w-full max-w-[260px]"
+                      />
+                    </a>
+                  ) : (
+                    <div className="overflow-hidden rounded-xl border border-slate-100 bg-slate-50 p-3 dark:border-slate-800 dark:bg-slate-950/40">
+                      <Image
+                        src={certificate.imageSrc}
+                        alt={certificate.imageAlt}
+                        width={600}
+                        height={600}
+                        className="mx-auto h-auto w-full max-w-[260px]"
+                      />
+                    </div>
+                  )}
+                  <p className="mt-3 text-xs font-medium uppercase tracking-[0.18em] text-slate-400 dark:text-slate-500">
+                    {certificate.issuer}
+                  </p>
+                  <h3 className="mt-1 text-sm font-semibold text-slate-900 dark:text-slate-100">
+                    {certificate.title}
+                  </h3>
+                  {certificate.verifyUrl && (
+                    <a
+                      href={certificate.verifyUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="mt-3 inline-flex items-center gap-1 rounded-full border border-slate-200 px-3 py-1 text-[11px] font-medium text-slate-700 transition hover:border-slate-300 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-200 dark:hover:border-slate-500 dark:hover:bg-slate-900"
+                    >
+                      Verify badge <span aria-hidden>↗</span>
+                    </a>
+                  )}
+                </article>
               ))}
             </div>
           </Section>

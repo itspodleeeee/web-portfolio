@@ -3,6 +3,7 @@ export const NAV_SECTIONS = [
   { id: "experience", label: "Experience" },
   { id: "skills", label: "Skills" },
   { id: "projects", label: "Projects" },
+  { id: "certificates", label: "Certificates" },
   { id: "ask", label: "Ask" },
   { id: "recognition", label: "Recognition" },
   { id: "contact", label: "Contact" }
@@ -267,6 +268,24 @@ export type RecognitionEntry = {
   description: string;
 };
 
+export type CertificateEntry = {
+  title: string;
+  issuer: string;
+  imageSrc: string;
+  imageAlt: string;
+  verifyUrl?: string;
+};
+
+export const CERTIFICATES: readonly CertificateEntry[] = [
+  {
+    title: "Microsoft Office Specialist: Word Associate",
+    issuer: "Microsoft",
+    imageSrc: "/certificates/mos-word-associate.png",
+    imageAlt: "Microsoft Office Specialist Word Associate badge",
+    verifyUrl: "https://www.credly.com/badges/e740844a-a342-47e0-8a47-74db220cd37e/public_url"
+  }
+];
+
 export const RECOGNITION_ITEMS: readonly RecognitionEntry[] = [
   {
     eyebrow: "MMDC ELO Nominee",
@@ -299,6 +318,20 @@ export const CHATBOT_FACTS = {
   location: "Philippines",
   targetRoles: ["Entry-level IT Support", "Network & Cybersecurity student"],
   relationshipStatus: "In a committed relationship with Micah and happily in a relationship with her.",
+  certifications: [
+    {
+      title: "Foundations of Cybersecurity",
+      issuer: "Google (Coursera)",
+      issued: "Aug 2025",
+      credentialId: "484KK7EQYFGH"
+    },
+    {
+      title: "Technical Support Fundamentals",
+      issuer: "Google (Coursera)",
+      issued: "Aug 2025",
+      credentialId: "NU4ZJIQ6SEVR"
+    }
+  ],
   extraHighlights: [
     "Created a Facebook page that amassed 100k followers in 6 months with content focused on humor, motivation, and relatable themes.",
     "Developed a content strategy that increased engagement by 150% within 3 months, utilizing analytics to optimize posting times and content types.",

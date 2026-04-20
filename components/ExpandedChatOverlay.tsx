@@ -3,6 +3,7 @@
 import { FormEvent, useEffect, useLayoutEffect, useRef } from "react";
 import { CHAT_SUGGESTIONS } from "./chatSuggestions";
 import { useChat } from "./ChatProvider";
+import { ChatMessageText } from "./ChatMessageText";
 
 type ExpandedChatOverlayProps = {
   onClose: () => void;
@@ -136,7 +137,7 @@ export const ExpandedChatOverlay = ({ onClose }: ExpandedChatOverlayProps) => {
                       : "border border-slate-100 bg-white text-slate-800 shadow-sm dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
                   }`}
                 >
-                  {m.content}
+                  <ChatMessageText text={m.content} />
                 </div>
               </div>
             ))}

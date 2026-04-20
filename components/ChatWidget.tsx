@@ -3,6 +3,7 @@
 import { FormEvent, useLayoutEffect, useRef } from "react";
 import { CHAT_SUGGESTIONS } from "./chatSuggestions";
 import { useChat } from "./ChatProvider";
+import { ChatMessageText } from "./ChatMessageText";
 
 export const ChatWidget = () => {
   const {
@@ -131,7 +132,7 @@ export const ChatWidget = () => {
                   : "bg-white text-slate-800 shadow-sm border border-slate-100 dark:bg-slate-900 dark:text-slate-100 dark:border-slate-700"
               }`}
             >
-              {m.content}
+              <ChatMessageText text={m.content} />
             </div>
           </div>
         ))}

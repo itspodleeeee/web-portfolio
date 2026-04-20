@@ -1,4 +1,5 @@
 import {
+  CERTIFICATES,
   CHATBOT_FACTS,
   CONTACT_DETAILS,
   EDUCATION_ITEMS,
@@ -71,6 +72,18 @@ ${SKILL_GROUPS.map((group) => `- ${group.label}: ${group.items.join(", ")}`).joi
 
 Recognition:
 ${RECOGNITION_ITEMS.map((item) => `- ${item.title}: ${item.description}`).join("\n")}
+
+Certifications (knowledge-only, not all are displayed in public cert cards):
+${CHATBOT_FACTS.certifications
+  .map(
+    (cert) =>
+      `- ${cert.title} | ${cert.issuer} | Issued ${cert.issued} | Credential ID: ${cert.credentialId}`
+  )
+  .join("\n")}
+${CERTIFICATES.map(
+  (cert) =>
+    `- Public certificate displayed on website: ${cert.title} | ${cert.issuer}${cert.verifyUrl ? ` | Verify: ${cert.verifyUrl}` : ""}`
+).join("\n")}
 
 RESUME:
 Botin, John Wilberth B.
